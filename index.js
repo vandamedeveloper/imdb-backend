@@ -1,33 +1,26 @@
+// app.js
 const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const mongoose = require("mongoose");
-
-// MIDDLEWARE ROUTES
+const errorMiddleware = require("./middlewares/error");
+const connectToDatabase = require("./db");
 const userRoutes = require("./src/routes/user");
 
 // CONFIGURATION
 dotenv.config();
 const app = express();
 app.use(cors());
-app.use(express.json());
-
-// DATABASE CONNECTION
-mongoose.set("strictQuery", false);
-mongoose
-  .connect(process.env.DB_URI)
-  .then(() => {
-    console.log("Connected to MongoDB Atlas");
-  })
-  .catch((err) => console.log(err));
-
-// MIDDLEWARES
-app.use("/api", userRoutes);
+app.use(bodyParser.json());
+connectToDatabase();
 
 app.get("/", (req, res) => {
   res.send("API");
 });
+
+// MIDDLEWARES
+app.use("/api/users", userRoutes);
+app.use(errorMiddleware);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
