@@ -9,7 +9,7 @@ module.exports = {
         email,
       },
       process.env.JWT_KEY,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     return token;
   },
