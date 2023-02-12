@@ -6,6 +6,7 @@ const cors = require("cors");
 const errorMiddleware = require("./middlewares/error");
 const connectToDatabase = require("./db");
 const userRoutes = require("./src/routes/user");
+const moviesRoutes = require("./src/routes/movies");
 
 // CONFIGURATION
 dotenv.config();
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 
 // MIDDLEWARES
 app.use("/api/users", userRoutes);
+app.use("/api/movies", moviesRoutes);
 app.use(errorMiddleware);
 
 const port = process.env.PORT || 5000;

@@ -2,12 +2,12 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
 const movieSchema = mongoose.Schema({
-  movieApi_ID: {
+  imdbID: {
     type: String,
     required: true,
     unique: true,
   },
-  userLikes: {
+  user_id: {
     type: ObjectId,
     ref: "User",
   },
